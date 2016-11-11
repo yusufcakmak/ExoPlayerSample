@@ -10,4 +10,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.yusufcakmak.exoplayersample.RadioPlayerActivity">
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:id="@+id/startButton"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startButton"
+        android:id="@+id/stopButton"
+        android:text="Stop"/>
+
+
+
 </RelativeLayout>

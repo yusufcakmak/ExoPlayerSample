@@ -4,6 +4,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -39,11 +42,17 @@ public class RadioPlayerActivity extends AppCompatActivity implements PlaybackCo
 
     private String radioUrl = "http://136.243.200.177:9314";
 
+    private Button stopButton;
+    private Button startButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_radio_player);
+
+        startButton = (Button) findViewById(R.id.startButton);
+        stopButton = (Button) findViewById(R.id.stopButton);
 
         mainHandler = new Handler();
         bandwidthMeter = new DefaultBandwidthMeter();
@@ -58,7 +67,23 @@ public class RadioPlayerActivity extends AppCompatActivity implements PlaybackCo
         extractorsFactory = new DefaultExtractorsFactory();
         videoSource = new ExtractorMediaSource(Uri.parse(radioUrl), dataSourceFactory, extractorsFactory, null, null);
         player.prepare(videoSource);
-        player.setPlayWhenReady(true);
+
+
+
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                player.setPlayWhenReady(true);
+            }
+        });
+
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                player.setPlayWhenReady(false);
+            }
+        });
+        
 
     }
 
