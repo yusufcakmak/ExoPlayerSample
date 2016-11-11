@@ -2,6 +2,18 @@
 
 You can play videos and musics with ExoPlayer. This demo shows you how to use ExoPlayer. You can play mp3s or radio stream links with RadioActivity.
 
+You can play and pause audio with this method setPlayWhenReady(boolean);
+
+play audio 
+```
+player.setPlayWhenReady(true);
+```
+
+pause audio
+```
+player.setPlayWhenReady(false);
+```
+
 If you need to play video, you can use SimpleExoPlayerView.
 
 ```
