@@ -38,7 +38,7 @@ public class RadioPlayerActivity extends AppCompatActivity implements PlaybackCo
     private SimpleExoPlayer player;
     private DataSource.Factory dataSourceFactory;
     private ExtractorsFactory extractorsFactory;
-    private MediaSource videoSource;
+    private MediaSource mediaSource;
 
     private String radioUrl = "http://136.243.200.177:9314";
 
@@ -65,8 +65,8 @@ public class RadioPlayerActivity extends AppCompatActivity implements PlaybackCo
         bandwidthMeter = new DefaultBandwidthMeter();
         dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"), (TransferListener<? super DataSource>) bandwidthMeter);
         extractorsFactory = new DefaultExtractorsFactory();
-        videoSource = new ExtractorMediaSource(Uri.parse(radioUrl), dataSourceFactory, extractorsFactory, null, null);
-        player.prepare(videoSource);
+        mediaSource = new ExtractorMediaSource(Uri.parse(radioUrl), dataSourceFactory, extractorsFactory, null, null);
+        player.prepare(mediaSource);
 
 
 
