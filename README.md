@@ -44,7 +44,7 @@ We need to SimpleExoPlayerView for playing videos.
         player.prepare(mediaSource);
 ```
 
-You can use VideoPlayerActivity for playing videos. If you use hls or dash formats, you need to use HlsMediaSource as a MediaSource.
+ If you use hls or dash formats, you need to use HlsMediaSource as a MediaSource.
 
 ```
 MediaSource mediaSource = new HlsMediaSource(Uri.parse("https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"),
