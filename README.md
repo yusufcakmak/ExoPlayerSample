@@ -52,10 +52,7 @@ MediaSource mediaSource = new HlsMediaSource(Uri.parse("https://bitdash-a.akamai
 player.prepare(mediaSource);
 ```
 
-If you use mp4, flv, mkv or other formats, you need to use ExtractorMediaSource as a MediaSource. Also we are using the ExtractorMediaSource for playing audio formats.
-
-Supported formats; mkv, mp4, mp3, ogg, ac3, flv, wav, flac.
-
+If you use mp4, flv, mkv or other formats, you need to use ExtractorMediaSource as a MediaSource. Also we are using the ExtractorMediaSource for playing audio formats.Supported formats; mkv, mp4, mp3, ogg, ac3, flv, wav, flac.
 
 ```
 extractorsFactory = new DefaultExtractorsFactory();
