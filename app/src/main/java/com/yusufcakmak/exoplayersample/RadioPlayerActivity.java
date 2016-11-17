@@ -28,7 +28,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.TransferListener;
 import com.google.android.exoplayer2.util.Util;
 
-public class RadioPlayerActivity extends AppCompatActivity implements PlaybackControlView.VisibilityListener {
+public class RadioPlayerActivity extends AppCompatActivity{
 
     private Handler mainHandler;
     private BandwidthMeter bandwidthMeter;
@@ -93,8 +93,4 @@ public class RadioPlayerActivity extends AppCompatActivity implements PlaybackCo
         player.setPlayWhenReady(false);
     }
 
-    @Override
-    public void onVisibilityChange(int visibility) {
-
-    }
 }
