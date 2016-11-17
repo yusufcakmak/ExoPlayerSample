@@ -14,12 +14,21 @@ pause audio
 player.setPlayWhenReady(false);
 ```
 
-If you need to play video, you can use SimpleExoPlayerView.
+### Playing Video
+
+You can use VideoPlayerActivity for playing videos. If you use hls or dash formats, you need to use HlsMediaSource as a MediaSource.
 
 ```
-        simpleExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.player_view);
-        simpleExoPlayerView.setControllerVisibilityListener(this);
-        simpleExoPlayerView.requestFocus();
-        simpleExoPlayerView.setPlayer(player);
+MediaSource mediaSource = new HlsMediaSource(Uri.parse("https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"),
+                mediaDataSourceFactory, mainHandler, null);
+player.prepare(mediaSource);
 ```
 
+If you use mp4,mp3, flv, ogg, mkv or other formats, you . need to use ExtractorMediaSource as a MediaSource
+
+```
+extractorsFactory = new DefaultExtractorsFactory();
+MediaSource mediaSource = new ExtractorMediaSource(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"),
+                mediaDataSourceFactory, extractorsFactory, null, null);
+player.prepare(mediaSource);
+```
