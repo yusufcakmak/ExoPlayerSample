@@ -45,10 +45,20 @@ We need to SimpleExoPlayerView for playing videos.
 ```
 
  If you use hls or dash formats, you need to use HlsMediaSource as a MediaSource.
+ 
+ For hls
 
 ```
 MediaSource mediaSource = new HlsMediaSource(Uri.parse("https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"),
                 mediaDataSourceFactory, mainHandler, null);
+player.prepare(mediaSource);
+```
+
+For dash
+
+```
+MediaSource mediaSource = new DashMediaSource(uri, buildDataSourceFactory(false),
+            new DefaultDashChunkSource.Factory(mediaDataSourceFactory), mainHandler, null);
 player.prepare(mediaSource);
 ```
 
