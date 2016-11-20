@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.yusufcakmak.exoplayersample.customview.CustomVideoPlayerActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     Button radioButton;
     Button videoButton;
+    Button customVideoButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         radioButton = (Button) findViewById(R.id.radioButton);
         videoButton = (Button) findViewById(R.id.videoButton);
+        customVideoButton = (Button) findViewById(R.id.customVideoButton);
 
         radioButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,5 +38,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        customVideoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CustomVideoPlayerActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

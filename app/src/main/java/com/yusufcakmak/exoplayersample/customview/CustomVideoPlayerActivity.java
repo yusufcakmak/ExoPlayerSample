@@ -1,4 +1,4 @@
-package com.yusufcakmak.exoplayersample;
+package com.yusufcakmak.exoplayersample.customview;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -16,19 +16,19 @@ import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveVideoTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.TransferListener;
 import com.google.android.exoplayer2.util.Util;
+import com.yusufcakmak.exoplayersample.R;
 
-public class VideoPlayerActivity extends Activity {
+public class CustomVideoPlayerActivity extends Activity {
 
     private Handler mainHandler;
     private Timeline.Window window;
-    private SimpleExoPlayerView simpleExoPlayerView;
+    private CustomExoPlayerView simpleExoPlayerView;
 
     private DataSource.Factory mediaDataSourceFactory;
     private SimpleExoPlayer player;
@@ -49,13 +49,13 @@ public class VideoPlayerActivity extends Activity {
         mediaDataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"), (TransferListener<? super DataSource>) bandwidthMeter);
         mainHandler = new Handler();
         window = new Timeline.Window();
-        setContentView(R.layout.activity_video_player);
+        setContentView(R.layout.activity_custom_video_player);
 
     }
 
     private void initializePlayer() {
 
-        simpleExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.player_view);
+        simpleExoPlayerView = (CustomExoPlayerView) findViewById(R.id.player_view);
         simpleExoPlayerView.requestFocus();
 
         TrackSelection.Factory videoTrackSelectionFactory =
