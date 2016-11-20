@@ -70,3 +70,103 @@ MediaSource mediaSource = new ExtractorMediaSource(Uri.parse("http://clips.vorwa
                 mediaDataSourceFactory, extractorsFactory, null, null);
 player.prepare(mediaSource);
 ```
+
+### Custom VideoPlayer View and PlaybackControls 
+
+I created CustomExoPlayerView and CustomPlaybackControlView classes. You can use custom playback controls easily. 
+
+simpleExoPlayerView = (CustomExoPlayerView) findViewById(R.id.custom_player_view);
+
+```
+   <com.yusufcakmak.exoplayersample.customview.CustomExoPlayerView
+        android:id="@+id/custom_player_view"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+```
+
+If you want to use custom playback, you need to 2 xml file in layout folder. 
+
+exo_simple_player_view.xml
+```
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <com.google.android.exoplayer2.ui.AspectRatioFrameLayout android:id="@+id/video_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+        <View android:id="@+id/shutter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"/>
+
+        <com.google.android.exoplayer2.ui.SubtitleView android:id="@+id/subtitles"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.google.android.exoplayer2.ui.AspectRatioFrameLayout>
+
+    <com.yusufcakmak.exoplayersample.customview.CustomPlaybackControlView
+        android:id="@+id/control"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</FrameLayout>
+```
+
+exo_playback_control_view.xml
+
+```
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:layout_gravity="bottom"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:layoutDirection="ltr">
+
+        <TextView
+            android:id="@+id/time_current"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:paddingStart="16dp"
+            android:text="00:00"
+            android:paddingEnd="4dp"
+            android:textColor="#000"/>
+
+
+        <SeekBar
+            android:id="@+id/mediacontroller_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="2dp"
+            android:layout_toRightOf="@id/time_current"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/play"
+            android:maxHeight="2dp"
+            android:thumbOffset="2dp"
+            android:progressDrawable="@drawable/progressbar"
+            android:thumb="@drawable/progressbar_thumb" />
+
+
+
+        <ImageView
+            android:id="@+id/play"
+            android:layout_height="36dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_width="36dp" />
+
+</RelativeLayout>
+```
+
+
+
