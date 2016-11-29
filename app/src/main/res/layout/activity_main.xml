@@ -18,21 +18,13 @@
         android:id="@+id/radioButton"
         android:text="Radio"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:layout_below="@+id/radioButton"
-        android:id="@+id/videoButton"
-        android:text="Video"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:layout_below="@+id/videoButton"
+        android:layout_below="@+id/radioButton"
         android:id="@+id/customVideoButton"
         android:text="Custom Video View"/>
 

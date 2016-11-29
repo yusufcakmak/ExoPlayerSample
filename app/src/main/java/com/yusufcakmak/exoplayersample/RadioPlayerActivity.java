@@ -4,13 +4,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.extractor.ExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -26,7 +30,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.TransferListener;
 import com.google.android.exoplayer2.util.Util;
 
-public class RadioPlayerActivity extends AppCompatActivity {
+public class RadioPlayerActivity extends AppCompatActivity implements ExoPlayer.EventListener {
 
     private Handler mainHandler;
     private BandwidthMeter bandwidthMeter;
@@ -57,6 +61,8 @@ public class RadioPlayerActivity extends AppCompatActivity {
         loadControl = new DefaultLoadControl();
         extractorsFactory = new DefaultExtractorsFactory();
 
+
+
         trackSelectionFactory = new AdaptiveVideoTrackSelection.Factory(bandwidthMeter);
 
         trackSelector = new DefaultTrackSelector(mainHandler,
@@ -80,6 +86,7 @@ public class RadioPlayerActivity extends AppCompatActivity {
 
         player.prepare(mediaSource);
 
+        Log.v("TEST","playing state : " + player.getPlaybackState());
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,4 +111,28 @@ public class RadioPlayerActivity extends AppCompatActivity {
         player.setPlayWhenReady(false);
     }
 
+    @Override
+    public void onLoadingChanged(boolean isLoading) {
+
+    }
+
+    @Override
+    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+
+    }
+
+    @Override
+    public void onTimelineChanged(Timeline timeline, Object manifest) {
+
+    }
+
+    @Override
+    public void onPlayerError(ExoPlaybackException error) {
+
+    }
+
+    @Override
+    public void onPositionDiscontinuity() {
+
+    }
 }
