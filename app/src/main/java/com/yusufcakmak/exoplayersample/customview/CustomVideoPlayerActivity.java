@@ -8,10 +8,13 @@ import android.os.Handler;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.MergingMediaSource;
+import com.google.android.exoplayer2.source.SingleSampleMediaSource;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveVideoTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
@@ -21,6 +24,7 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.TransferListener;
+import com.google.android.exoplayer2.util.MimeTypes;
 import com.google.android.exoplayer2.util.Util;
 import com.yusufcakmak.exoplayersample.R;
 
@@ -65,13 +69,49 @@ public class CustomVideoPlayerActivity extends Activity {
                 null, false);
         simpleExoPlayerView.setPlayer(player);
         player.setPlayWhenReady(shouldAutoPlay);
+
+        
         MediaSource mediaSource = new HlsMediaSource(Uri.parse("https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"),
                 mediaDataSourceFactory, mainHandler, null);
 
-        /*extractorsFactory = new DefaultExtractorsFactory();
+        Format textFormat = Format.createTextSampleFormat(null, MimeTypes.APPLICATION_SUBRIP,
+                null, Format.NO_VALUE, Format.NO_VALUE, "en", null);
+
+        MediaSource subtitleSource = new SingleSampleMediaSource(null, mediaDataSourceFactory, textFormat, C.TIME_UNSET);
+
+        MergingMediaSource mergedSource =
+                new MergingMediaSource(mediaSource, subtitleSource);
+
+        player.prepare(mergedSource);
+
+        // if you are using different source like mp4 and custom subtitle
+        /*
+        extractorsFactory = new DefaultExtractorsFactory();
         MediaSource mediaSource = new ExtractorMediaSource(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"),
-                mediaDataSourceFactory, extractorsFactory, null, null);*/
+                mediaDataSourceFactory, extractorsFactory, null, null);
+
+        Uri uri = Uri.parse("http://www.storiesinflight.com/js_videosub/jellies.srt");
+
+        Format textFormat = Format.createTextSampleFormat(null, MimeTypes.APPLICATION_SUBRIP,
+                null, Format.NO_VALUE, Format.NO_VALUE, "en", null);
+
+        MediaSource subtitleSource = new SingleSampleMediaSource(uri, mediaDataSourceFactory, textFormat, C.TIME_UNSET);
+
+        MergingMediaSource mergedSource =
+                new MergingMediaSource(mediaSource, subtitleSource);
+
+         */
+
+
+        // if you want play without subtitle
+
+        /*
+                MediaSource mediaSource = new HlsMediaSource(Uri.parse("https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"),
+                mediaDataSourceFactory, mainHandler, null);
         player.prepare(mediaSource);
+
+         */
+
     }
 
     private void releasePlayer() {
