@@ -4,89 +4,68 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.LoadControl;
+import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.extractor.ExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.trackselection.AdaptiveVideoTrackSelection;
+import com.google.android.exoplayer2.source.TrackGroupArray;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
-import com.google.android.exoplayer2.upstream.TransferListener;
 import com.google.android.exoplayer2.util.Util;
 
 public class RadioPlayerActivity extends AppCompatActivity implements ExoPlayer.EventListener {
 
-    private Handler mainHandler;
-    private BandwidthMeter bandwidthMeter;
-    private TrackSelector trackSelector;
-    private TrackSelection.Factory trackSelectionFactory;
-    private LoadControl loadControl;
     private SimpleExoPlayer player;
-    private DataSource.Factory dataSourceFactory;
-    private ExtractorsFactory extractorsFactory;
-    private MediaSource mediaSource;
-
-    private String radioUrl = "http://136.243.200.177:9314";
-
-    private Button stopButton;
-    private Button startButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_radio_player);
 
-        startButton = (Button) findViewById(R.id.startButton);
-        stopButton = (Button) findViewById(R.id.stopButton);
+        Button startButton = (Button) findViewById(R.id.startButton);
+        Button stopButton = (Button) findViewById(R.id.stopButton);
 
-        mainHandler = new Handler();
-        bandwidthMeter = new DefaultBandwidthMeter();
-        loadControl = new DefaultLoadControl();
-        extractorsFactory = new DefaultExtractorsFactory();
+        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
 
+        TrackSelection.Factory trackSelectionFactory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
 
-
-        trackSelectionFactory = new AdaptiveVideoTrackSelection.Factory(bandwidthMeter);
-
-        trackSelector = new DefaultTrackSelector(mainHandler,
-                trackSelectionFactory);
+        TrackSelector trackSelector = new DefaultTrackSelector(trackSelectionFactory);
 
 
-        dataSourceFactory = new DefaultDataSourceFactory(this,
+/*        dataSourceFactory = new DefaultDataSourceFactory(this,
                 Util.getUserAgent(this, "mediaPlayerSample"),
-                (TransferListener<? super DataSource>) bandwidthMeter);
+                (TransferListener<? super DataSource>) bandwidthMeter);*/
+
+        DefaultBandwidthMeter defaultBandwidthMeter = new DefaultBandwidthMeter();
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this,
+                Util.getUserAgent(this, "mediaPlayerSample"), defaultBandwidthMeter);
 
 
-        mediaSource = new ExtractorMediaSource(Uri.parse(radioUrl),
-                dataSourceFactory,
-                extractorsFactory,
-                null,
-                null);
+        MediaSource mediaSource = new ExtractorMediaSource(Uri.parse("http://rs1.radiostreamer.com:8030"), dataSourceFactory, extractorsFactory, null, null);
 
-        player = ExoPlayerFactory.newSimpleInstance(getApplicationContext(),
-                trackSelector,
-                loadControl);
 
+        player = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
+
+        player.addListener(this);
         player.prepare(mediaSource);
 
-        Log.v("TEST","playing state : " + player.getPlaybackState());
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +80,6 @@ public class RadioPlayerActivity extends AppCompatActivity implements ExoPlayer.
                 player.setPlayWhenReady(false);
             }
         });
-
 
     }
 
@@ -127,12 +105,22 @@ public class RadioPlayerActivity extends AppCompatActivity implements ExoPlayer.
     }
 
     @Override
+    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+
+    }
+
+    @Override
     public void onPlayerError(ExoPlaybackException error) {
 
     }
 
     @Override
     public void onPositionDiscontinuity() {
+
+    }
+
+    @Override
+    public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
 
     }
 }

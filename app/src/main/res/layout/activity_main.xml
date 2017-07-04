@@ -16,7 +16,7 @@
         android:textAlignment="center"
         android:textAllCaps="false"
         android:id="@+id/radioButton"
-        android:text="Radio"/>
+        android:text="Radio Player"/>
 
 
     <Button
@@ -26,6 +26,6 @@
         android:textAllCaps="false"
         android:layout_below="@+id/radioButton"
         android:id="@+id/customVideoButton"
-        android:text="Custom Video View"/>
+        android:text="Video Player"/>
 
 </RelativeLayout>
