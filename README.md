@@ -4,7 +4,7 @@ You can play videos and musics with ExoPlayer. This demo shows you how to use Ex
 
 This repo updated for r2.4.2 version. I will update the documentation soon for version r2.4.2.
 
-The following document is still valid for version r2.0.4.
+###### The following document is still valid for version r2.0.4.
 
 ```
         player = ExoPlayerFactory.newSimpleInstance(getApplicationContext(), trackSelector, loadControl);
