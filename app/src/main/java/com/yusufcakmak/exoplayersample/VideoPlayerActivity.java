@@ -24,9 +24,11 @@ import com.google.android.exoplayer2.util.Util;
 
 public class VideoPlayerActivity extends Activity {
 
+    private SimpleExoPlayerView simpleExoPlayerView;
+    private SimpleExoPlayer player;
+
     private Timeline.Window window;
     private DataSource.Factory mediaDataSourceFactory;
-    private SimpleExoPlayer player;
     private DefaultTrackSelector trackSelector;
     private boolean shouldAutoPlay;
     private BandwidthMeter bandwidthMeter;
@@ -46,21 +48,27 @@ public class VideoPlayerActivity extends Activity {
 
     private void initializePlayer() {
 
-        SimpleExoPlayerView simpleExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.player_view);
+        simpleExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.player_view);
         simpleExoPlayerView.requestFocus();
 
         TrackSelection.Factory videoTrackSelectionFactory =
                 new AdaptiveTrackSelection.Factory(bandwidthMeter);
+
         trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
+
         player = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
+
         simpleExoPlayerView.setPlayer(player);
+
         player.setPlayWhenReady(shouldAutoPlay);
 /*        MediaSource mediaSource = new HlsMediaSource(Uri.parse("https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"),
                 mediaDataSourceFactory, mainHandler, null);*/
 
         DefaultExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+
         MediaSource mediaSource = new ExtractorMediaSource(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"),
                 mediaDataSourceFactory, extractorsFactory, null, null);
+
         player.prepare(mediaSource);
     }
 

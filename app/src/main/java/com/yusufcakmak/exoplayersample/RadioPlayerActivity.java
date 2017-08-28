@@ -29,41 +29,50 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-public class RadioPlayerActivity extends AppCompatActivity implements ExoPlayer.EventListener {
+public class RadioPlayerActivity extends AppCompatActivity {
+
+
+    private Button startButton;
+    private Button stopButton;
 
     private SimpleExoPlayer player;
+    private BandwidthMeter bandwidthMeter;
+    private ExtractorsFactory extractorsFactory;
+    private TrackSelection.Factory trackSelectionFactory;
+    private TrackSelector trackSelector;
+    private DefaultBandwidthMeter defaultBandwidthMeter;
+    private DataSource.Factory dataSourceFactory;
+    private MediaSource mediaSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_radio_player);
 
-        Button startButton = (Button) findViewById(R.id.startButton);
-        Button stopButton = (Button) findViewById(R.id.stopButton);
+        startButton = (Button) findViewById(R.id.startButton);
+        stopButton = (Button) findViewById(R.id.stopButton);
 
-        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
-        ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+        bandwidthMeter = new DefaultBandwidthMeter();
+        extractorsFactory = new DefaultExtractorsFactory();
 
-        TrackSelection.Factory trackSelectionFactory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
+        trackSelectionFactory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
 
-        TrackSelector trackSelector = new DefaultTrackSelector(trackSelectionFactory);
-
+        trackSelector = new DefaultTrackSelector(trackSelectionFactory);
 
 /*        dataSourceFactory = new DefaultDataSourceFactory(this,
                 Util.getUserAgent(this, "mediaPlayerSample"),
                 (TransferListener<? super DataSource>) bandwidthMeter);*/
 
-        DefaultBandwidthMeter defaultBandwidthMeter = new DefaultBandwidthMeter();
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this,
+        defaultBandwidthMeter = new DefaultBandwidthMeter();
+        dataSourceFactory = new DefaultDataSourceFactory(this,
                 Util.getUserAgent(this, "mediaPlayerSample"), defaultBandwidthMeter);
 
 
-        MediaSource mediaSource = new ExtractorMediaSource(Uri.parse("http://rs1.radiostreamer.com:8030"), dataSourceFactory, extractorsFactory, null, null);
-
+        mediaSource = new ExtractorMediaSource(Uri.parse("http://rs1.radiostreamer.com:8030"), dataSourceFactory, extractorsFactory, null, null);
 
         player = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
 
-        player.addListener(this);
+
         player.prepare(mediaSource);
 
 
@@ -87,40 +96,5 @@ public class RadioPlayerActivity extends AppCompatActivity implements ExoPlayer.
     protected void onDestroy() {
         super.onDestroy();
         player.setPlayWhenReady(false);
-    }
-
-    @Override
-    public void onLoadingChanged(boolean isLoading) {
-
-    }
-
-    @Override
-    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-
-    }
-
-    @Override
-    public void onTimelineChanged(Timeline timeline, Object manifest) {
-
-    }
-
-    @Override
-    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-
-    }
-
-    @Override
-    public void onPlayerError(ExoPlaybackException error) {
-
-    }
-
-    @Override
-    public void onPositionDiscontinuity() {
-
-    }
-
-    @Override
-    public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
-
     }
 }

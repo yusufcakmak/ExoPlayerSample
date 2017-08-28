@@ -20,6 +20,9 @@ android {
 
     repositories {
         jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
     }
 }
 
@@ -28,7 +31,19 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:appcompat-v7:25.4.0'
     testCompile 'junit:junit:4.12'
-    compile 'com.google.android.exoplayer:exoplayer:r2.4.2'
+
+    // full exoplayer library
+    compile 'com.google.android.exoplayer:exoplayer:r2.5.1'
+
+
+    /*
+    library modules
+    compile 'com.google.android.exoplayer:exoplayer-core:r2.X.X'
+    compile 'com.google.android.exoplayer:exoplayer-ui:r2.X.X'
+    compile 'com.google.android.exoplayer:exoplayer-dash:r2.X.X'
+    compile 'com.google.android.exoplayer:exoplayer-hls:r2.X.X'
+    compile 'com.google.android.exoplayer-smoothstreaming:r2.X.X'
+    */
 }
