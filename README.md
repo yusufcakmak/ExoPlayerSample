@@ -1,10 +1,11 @@
 # ExoPlayer2 Sample Project
 
+#### This repo updated for r2.5.1 version.
+
 You can play videos and musics with ExoPlayer. This demo shows you how to use ExoPlayer. You can play mp3s or radio stream links with RadioActivity.
 
-#### This repo updated for r2.5.1 version. I will update the documentation soon for version r2.5.1.
 
-The following document is still valid for version r2.0.4.
+### Playing Audio
 
 ```
         player = ExoPlayerFactory.newSimpleInstance(getApplicationContext(), trackSelector, loadControl);
@@ -28,6 +29,7 @@ pause audio
 player.setPlayWhenReady(false);
 ```
 
+
 ### Playing Video
 
 We need to SimpleExoPlayerView for playing videos.
@@ -37,14 +39,23 @@ We need to SimpleExoPlayerView for playing videos.
         simpleExoPlayerView.requestFocus();
 
         TrackSelection.Factory videoTrackSelectionFactory =
-                new AdaptiveVideoTrackSelection.Factory(bandwidthMeter);
-        trackSelector = new DefaultTrackSelector(mainHandler, videoTrackSelectionFactory);
-        player = ExoPlayerFactory.newSimpleInstance(this, trackSelector, new DefaultLoadControl(),
-                null, false);
+                new AdaptiveTrackSelection.Factory(bandwidthMeter);
+
+        trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
+
+        player = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
+
         simpleExoPlayerView.setPlayer(player);
+
         player.setPlayWhenReady(shouldAutoPlay);
-        MediaSource mediaSource = new HlsMediaSource(Uri.parse("https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"),
-                mediaDataSourceFactory, mainHandler, null);
+/*        MediaSource mediaSource = new HlsMediaSource(Uri.parse("https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"),
+                mediaDataSourceFactory, mainHandler, null);*/
+
+        DefaultExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+
+        MediaSource mediaSource = new ExtractorMediaSource(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"),
+                mediaDataSourceFactory, extractorsFactory, null, null);
+
         player.prepare(mediaSource);
 ```
 
@@ -75,102 +86,22 @@ MediaSource mediaSource = new ExtractorMediaSource(Uri.parse("http://clips.vorwa
 player.prepare(mediaSource);
 ```
 
-### Custom VideoPlayer View and PlaybackControls 
-
-I created CustomExoPlayerView and CustomPlaybackControlView classes. You can use custom playback controls easily. 
-
-simpleExoPlayerView = (CustomExoPlayerView) findViewById(R.id.custom_player_view);
-
-```
-   <com.yusufcakmak.exoplayersample.customview.CustomExoPlayerView
-        android:id="@+id/custom_player_view"
-        android:focusable="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-```
-
-If you want to use custom playback, you need to 2 xml file in layout folder. 
-
-exo_simple_player_view.xml
-```
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
-
-    <com.google.android.exoplayer2.ui.AspectRatioFrameLayout android:id="@+id/video_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center">
-
-        <View android:id="@+id/shutter"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/black"/>
-
-        <com.google.android.exoplayer2.ui.SubtitleView android:id="@+id/subtitles"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-    </com.google.android.exoplayer2.ui.AspectRatioFrameLayout>
-
-    <com.yusufcakmak.exoplayersample.customview.CustomPlaybackControlView
-        android:id="@+id/control"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-</FrameLayout>
-```
-
-exo_playback_control_view.xml
-
-```
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:layout_gravity="bottom"
-    android:background="#fff"
-    android:orientation="vertical"
-    android:layoutDirection="ltr">
-
-        <TextView
-            android:id="@+id/time_current"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_centerVertical="true"
-            android:paddingStart="16dp"
-            android:text="00:00"
-            android:paddingEnd="4dp"
-            android:textColor="#000"/>
 
 
-        <SeekBar
-            android:id="@+id/mediacontroller_progress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="2dp"
-            android:layout_toRightOf="@id/time_current"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/play"
-            android:maxHeight="2dp"
-            android:thumbOffset="2dp"
-            android:progressDrawable="@drawable/progressbar"
-            android:thumb="@drawable/progressbar_thumb" />
+License
+--------
 
 
+    Copyright 2017 Yusuf Çakmak.
 
-        <ImageView
-            android:id="@+id/play"
-            android:layout_height="36dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
-            android:layout_width="36dp" />
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-</RelativeLayout>
-```
+       http://www.apache.org/licenses/LICENSE-2.0
 
-
-
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
