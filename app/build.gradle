@@ -35,7 +35,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     // full exoplayer library
-    compile 'com.google.android.exoplayer:exoplayer:r2.5.1'
+    compile 'com.google.android.exoplayer:exoplayer:r2.5.2'
 
 
     /*

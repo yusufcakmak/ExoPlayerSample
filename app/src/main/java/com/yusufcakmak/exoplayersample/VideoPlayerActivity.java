@@ -3,6 +3,8 @@ package com.yusufcakmak.exoplayersample;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -33,6 +35,8 @@ public class VideoPlayerActivity extends Activity {
     private boolean shouldAutoPlay;
     private BandwidthMeter bandwidthMeter;
 
+    private ImageView ivHideControllerButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,7 @@ public class VideoPlayerActivity extends Activity {
     private void initializePlayer() {
 
         simpleExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.player_view);
+        ivHideControllerButton = (ImageView) findViewById(R.id.exo_controller);
         simpleExoPlayerView.requestFocus();
 
         TrackSelection.Factory videoTrackSelectionFactory =
@@ -70,6 +75,14 @@ public class VideoPlayerActivity extends Activity {
                 mediaDataSourceFactory, extractorsFactory, null, null);
 
         player.prepare(mediaSource);
+        
+
+        ivHideControllerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              simpleExoPlayerView.hideController();
+            }
+        });
     }
 
     private void releasePlayer() {
