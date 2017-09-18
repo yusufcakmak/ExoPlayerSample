@@ -4,6 +4,10 @@
 
 You can play videos and musics with ExoPlayer. This demo shows you how to use ExoPlayer. You can play mp3s or radio stream links with RadioActivity.
 
+I wrote a article about ExoPlayer. 
+
+[https://medium.com/@yusufcakmak/android-exoplayer-starters-guide-6350433f256c](https://medium.com/@yusufcakmak/android-exoplayer-starters-guide-6350433f256c)
+
 
 ### Playing Audio
 
