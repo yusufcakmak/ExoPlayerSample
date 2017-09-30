@@ -48,12 +48,18 @@ public class VideoPlayerActivity extends Activity {
         mediaDataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"), (TransferListener<? super DataSource>) bandwidthMeter);
         window = new Timeline.Window();
 
+        ivHideControllerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                simpleExoPlayerView.hideController();
+            }
+        });
+
     }
 
     private void initializePlayer() {
 
         simpleExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.player_view);
-        ivHideControllerButton = (ImageView) findViewById(R.id.exo_controller);
         simpleExoPlayerView.requestFocus();
 
         TrackSelection.Factory videoTrackSelectionFactory =
@@ -75,14 +81,6 @@ public class VideoPlayerActivity extends Activity {
                 mediaDataSourceFactory, extractorsFactory, null, null);
 
         player.prepare(mediaSource);
-        
-
-        ivHideControllerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              simpleExoPlayerView.hideController();
-            }
-        });
     }
 
     private void releasePlayer() {
