@@ -8,6 +8,8 @@ I wrote a article about ExoPlayer.
 
 [https://medium.com/@yusufcakmak/android-exoplayer-starters-guide-6350433f256c](https://medium.com/@yusufcakmak/android-exoplayer-starters-guide-6350433f256c)
 
+I changed playback controls for custom ui demo. If you want to use default controls, you can delete exoplayer layout files. You can find more details under Custom UI heading.
+
 
 ### Playing Audio
 
@@ -33,6 +35,7 @@ pause audio
 player.setPlayWhenReady(false);
 ```
 
+![customui](https://raw.githubusercontent.com/yusufcakmak/ExoPlayerSample/master/screenshot/player.jpg)
 
 ### Playing Video
 
@@ -92,7 +95,7 @@ player.prepare(mediaSource);
 
 ### Custom UI
 
-You can build custom players by overriding layout files. You need to create to files in your layout folder. Necessary files are given below. But first we can look how to do it. There it is two layout files enough for the building a custom player. This is an easy and good way for developers. Thanks for this, ExoPlayer Team :)
+You can build custom players by overriding layout files. You need to create to files in your layout folder. Necessary files are given below. But first we can look how to do it. There it is two layout files enough for the building a custom player. This is an easy and good way for developers. 
 
 [exo_playback_control_view.xml](https://github.com/google/ExoPlayer/blob/release-v2/library/ui/src/main/res/layout/exo_playback_control_view.xml)
 [exo_simple_player_view.xml](https://github.com/google/ExoPlayer/blob/release-v2/library/ui/src/main/res/layout/exo_simple_player_view.xml)
