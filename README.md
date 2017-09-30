@@ -35,8 +35,6 @@ pause audio
 player.setPlayWhenReady(false);
 ```
 
-![customui](https://raw.githubusercontent.com/yusufcakmak/ExoPlayerSample/master/screenshot/player.jpg)
-
 ### Playing Video
 
 We need to SimpleExoPlayerView for playing videos.
@@ -92,6 +90,9 @@ MediaSource mediaSource = new ExtractorMediaSource(Uri.parse("http://clips.vorwa
                 mediaDataSourceFactory, extractorsFactory, null, null);
 player.prepare(mediaSource);
 ```
+
+
+![player](https://raw.githubusercontent.com/yusufcakmak/ExoPlayerSample/master/screenshot/player.jpg)
 
 ### Custom UI
 
