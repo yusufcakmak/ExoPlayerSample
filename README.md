@@ -90,6 +90,12 @@ MediaSource mediaSource = new ExtractorMediaSource(Uri.parse("http://clips.vorwa
 player.prepare(mediaSource);
 ```
 
+### Custom UI
+
+You can build custom players by overriding layout files. You need to create to files in your layout folder. Necessary files are given below. But first we can look how to do it. There it is two layout files enough for the building a custom player. This is an easy and good way for developers. Thanks for this, ExoPlayer Team :)
+
+[exo_playback_control_view.xml](https://github.com/google/ExoPlayer/blob/release-v2/library/ui/src/main/res/layout/exo_playback_control_view.xml)
+[exo_simple_player_view.xml](https://github.com/google/ExoPlayer/blob/release-v2/library/ui/src/main/res/layout/exo_simple_player_view.xml)
 
 
 License
