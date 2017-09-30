@@ -97,6 +97,8 @@ You can build custom players by overriding layout files. You need to create to f
 [exo_playback_control_view.xml](https://github.com/google/ExoPlayer/blob/release-v2/library/ui/src/main/res/layout/exo_playback_control_view.xml)
 [exo_simple_player_view.xml](https://github.com/google/ExoPlayer/blob/release-v2/library/ui/src/main/res/layout/exo_simple_player_view.xml)
 
+![customui](https://raw.githubusercontent.com/yusufcakmak/ExoPlayerSample/master/screenshot/customplayer.jpg)
+
 
 License
 --------
