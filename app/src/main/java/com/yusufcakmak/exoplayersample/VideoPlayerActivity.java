@@ -47,13 +47,7 @@ public class VideoPlayerActivity extends Activity {
         bandwidthMeter = new DefaultBandwidthMeter();
         mediaDataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"), (TransferListener<? super DataSource>) bandwidthMeter);
         window = new Timeline.Window();
-
-        ivHideControllerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                simpleExoPlayerView.hideController();
-            }
-        });
+        ivHideControllerButton = (ImageView) findViewById(R.id.exo_controller);
 
     }
 
@@ -81,6 +75,13 @@ public class VideoPlayerActivity extends Activity {
                 mediaDataSourceFactory, extractorsFactory, null, null);
 
         player.prepare(mediaSource);
+
+        ivHideControllerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                simpleExoPlayerView.hideController();
+            }
+        });
     }
 
     private void releasePlayer() {

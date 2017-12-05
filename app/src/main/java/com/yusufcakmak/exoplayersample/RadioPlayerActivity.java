@@ -68,7 +68,7 @@ public class RadioPlayerActivity extends AppCompatActivity {
                 Util.getUserAgent(this, "mediaPlayerSample"), defaultBandwidthMeter);
 
 
-        mediaSource = new ExtractorMediaSource(Uri.parse("http://rs1.radiostreamer.com:8030"), dataSourceFactory, extractorsFactory, null, null);
+        mediaSource = new ExtractorMediaSource(Uri.parse("http://radio.compinche.net:7662/gypsy.ogg"), dataSourceFactory, extractorsFactory, null, null);
 
         player = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
 
