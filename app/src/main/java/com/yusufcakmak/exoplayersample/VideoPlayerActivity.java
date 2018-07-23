@@ -36,12 +36,28 @@ public class VideoPlayerActivity extends Activity {
     private BandwidthMeter bandwidthMeter;
 
     private ImageView ivHideControllerButton;
+    private boolean playWhenReady;
+    private int currentWindow;
+    private long playbackPosition;
+    private int position;
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
+
+        if(savedInstanceState == null){
+            playWhenReady = true;
+            currentWindow = 0;
+            playbackPosition = 0;
+        }else {
+            playWhenReady = savedInstanceState.getBoolean("playWhenReady");
+            currentWindow = savedInstanceState.getInt("currentWindow");
+            playbackPosition = savedInstanceState.getLong("playBackPosition");
+        }
 
         shouldAutoPlay = true;
         bandwidthMeter = new DefaultBandwidthMeter();
@@ -69,12 +85,14 @@ public class VideoPlayerActivity extends Activity {
 /*        MediaSource mediaSource = new HlsMediaSource(Uri.parse("https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"),
                 mediaDataSourceFactory, mainHandler, null);*/
 
+        player.seekTo(currentWindow, playbackPosition);
+
         DefaultExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
 
         MediaSource mediaSource = new ExtractorMediaSource(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"),
                 mediaDataSourceFactory, extractorsFactory, null, null);
 
-        player.prepare(mediaSource);
+        player.prepare(mediaSource, true, false);
 
         ivHideControllerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +104,9 @@ public class VideoPlayerActivity extends Activity {
 
     private void releasePlayer() {
         if (player != null) {
+            playbackPosition = player.getCurrentPosition();
+            currentWindow = player.getCurrentWindowIndex();
+            playWhenReady = player.getPlayWhenReady();
             shouldAutoPlay = player.getPlayWhenReady();
             player.release();
             player = null;
@@ -123,5 +144,17 @@ public class VideoPlayerActivity extends Activity {
         if (Util.SDK_INT > 23) {
             releasePlayer();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        playbackPosition = player.getCurrentPosition();
+        currentWindow = player.getCurrentWindowIndex();
+        playWhenReady = player.getPlayWhenReady();
+
+        outState.putBoolean("playWhenReady", playWhenReady);
+        outState.putInt("currentWindow", currentWindow);
+        outState.putLong("playBackPosition", playbackPosition);
+        super.onSaveInstanceState(outState);
     }
 }
