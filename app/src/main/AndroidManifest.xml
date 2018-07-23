@@ -19,7 +19,6 @@
         </activity>
         <activity android:name=".RadioPlayerActivity"/>
         <activity android:name=".VideoPlayerActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:launchMode="singleTop"
             android:theme="@style/PlayerTheme">
             <intent-filter>
