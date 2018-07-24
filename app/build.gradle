@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.yusufcakmak.exoplayersample"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -27,23 +27,23 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.4.0'
-    testCompile 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:27.0.0'
+    testImplementation 'junit:junit:4.12'
 
     // full exoplayer library
-    compile 'com.google.android.exoplayer:exoplayer:r2.5.2'
+    implementation 'com.google.android.exoplayer:exoplayer:2.8.2'
 
 
     /*
     library modules
-    compile 'com.google.android.exoplayer:exoplayer-core:r2.X.X'
-    compile 'com.google.android.exoplayer:exoplayer-ui:r2.X.X'
-    compile 'com.google.android.exoplayer:exoplayer-dash:r2.X.X'
-    compile 'com.google.android.exoplayer:exoplayer-hls:r2.X.X'
-    compile 'com.google.android.exoplayer-smoothstreaming:r2.X.X'
+    implementation 'com.google.android.exoplayer:exoplayer-core:r2.X.X'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:r2.X.X'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:r2.X.X'
+    implementation 'com.google.android.exoplayer:exoplayer-hls:r2.X.X'
+    implementation 'com.google.android.exoplayer-smoothstreaming:r2.X.X'
     */
 }
