@@ -16,6 +16,7 @@ import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DataSource;
@@ -26,7 +27,11 @@ import com.google.android.exoplayer2.util.Util;
 
 public class VideoPlayerActivity extends Activity {
 
-    private SimpleExoPlayerView simpleExoPlayerView;
+    private static final String KEY_PLAY_WHEN_READY = "play_when_ready";
+    private static final String KEY_WINDOW = "window";
+    private static final String KEY_POSITION = "position";
+
+    private PlayerView mPlayerView;
     private SimpleExoPlayer player;
 
     private Timeline.Window window;
@@ -39,38 +44,35 @@ public class VideoPlayerActivity extends Activity {
     private boolean playWhenReady;
     private int currentWindow;
     private long playbackPosition;
-    private int position;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             playWhenReady = true;
             currentWindow = 0;
             playbackPosition = 0;
-        }else {
-            playWhenReady = savedInstanceState.getBoolean("playWhenReady");
-            currentWindow = savedInstanceState.getInt("currentWindow");
-            playbackPosition = savedInstanceState.getLong("playBackPosition");
+        } else {
+            playWhenReady = savedInstanceState.getBoolean(KEY_PLAY_WHEN_READY);
+            currentWindow = savedInstanceState.getInt(KEY_WINDOW);
+            playbackPosition = savedInstanceState.getLong(KEY_POSITION);
         }
 
         shouldAutoPlay = true;
         bandwidthMeter = new DefaultBandwidthMeter();
-        mediaDataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"), (TransferListener<? super DataSource>) bandwidthMeter);
+        mediaDataSourceFactory = new DefaultDataSourceFactory(this,
+                Util.getUserAgent(this, "mediaPlayerSample"), (TransferListener<? super DataSource>) bandwidthMeter);
         window = new Timeline.Window();
-        ivHideControllerButton = (ImageView) findViewById(R.id.exo_controller);
+        ivHideControllerButton = findViewById(R.id.exo_controller);
 
     }
 
     private void initializePlayer() {
 
-        simpleExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.player_view);
-        simpleExoPlayerView.requestFocus();
+        mPlayerView = findViewById(R.id.player_view);
+        mPlayerView.requestFocus();
 
         TrackSelection.Factory videoTrackSelectionFactory =
                 new AdaptiveTrackSelection.Factory(bandwidthMeter);
@@ -79,34 +81,34 @@ public class VideoPlayerActivity extends Activity {
 
         player = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
 
-        simpleExoPlayerView.setPlayer(player);
+        mPlayerView.setPlayer(player);
 
         player.setPlayWhenReady(shouldAutoPlay);
 /*        MediaSource mediaSource = new HlsMediaSource(Uri.parse("https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"),
                 mediaDataSourceFactory, mainHandler, null);*/
 
-        player.seekTo(currentWindow, playbackPosition);
 
-        DefaultExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+        MediaSource mediaSource = new ExtractorMediaSource.Factory(mediaDataSourceFactory)
+                .createMediaSource(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"));
 
-        MediaSource mediaSource = new ExtractorMediaSource(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"),
-                mediaDataSourceFactory, extractorsFactory, null, null);
+        boolean haveStartPosition = currentWindow != C.INDEX_UNSET;
+        if (haveStartPosition) {
+            player.seekTo(currentWindow, playbackPosition);
+        }
 
-        player.prepare(mediaSource, true, false);
+        player.prepare(mediaSource, !haveStartPosition, false);
 
         ivHideControllerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                simpleExoPlayerView.hideController();
+                mPlayerView.hideController();
             }
         });
     }
 
     private void releasePlayer() {
         if (player != null) {
-            playbackPosition = player.getCurrentPosition();
-            currentWindow = player.getCurrentWindowIndex();
-            playWhenReady = player.getPlayWhenReady();
+            updateStartPosition();
             shouldAutoPlay = player.getPlayWhenReady();
             player.release();
             player = null;
@@ -148,13 +150,17 @@ public class VideoPlayerActivity extends Activity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        updateStartPosition();
+
+        outState.putBoolean(KEY_PLAY_WHEN_READY, playWhenReady);
+        outState.putInt(KEY_WINDOW, currentWindow);
+        outState.putLong(KEY_POSITION, playbackPosition);
+        super.onSaveInstanceState(outState);
+    }
+
+    private void updateStartPosition() {
         playbackPosition = player.getCurrentPosition();
         currentWindow = player.getCurrentWindowIndex();
         playWhenReady = player.getPlayWhenReady();
-
-        outState.putBoolean("playWhenReady", playWhenReady);
-        outState.putInt("currentWindow", currentWindow);
-        outState.putLong("playBackPosition", playbackPosition);
-        super.onSaveInstanceState(outState);
     }
 }
