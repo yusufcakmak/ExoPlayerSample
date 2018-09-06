@@ -3,21 +3,22 @@ package com.yusufcakmak.exoplayersample;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
@@ -31,7 +32,7 @@ public class VideoPlayerActivity extends Activity {
     private static final String KEY_WINDOW = "window";
     private static final String KEY_POSITION = "position";
 
-    private PlayerView mPlayerView;
+    private PlayerView playerView;
     private SimpleExoPlayer player;
 
     private Timeline.Window window;
@@ -40,6 +41,7 @@ public class VideoPlayerActivity extends Activity {
     private boolean shouldAutoPlay;
     private BandwidthMeter bandwidthMeter;
 
+    private ProgressBar progressBar;
     private ImageView ivHideControllerButton;
     private boolean playWhenReady;
     private int currentWindow;
@@ -62,17 +64,16 @@ public class VideoPlayerActivity extends Activity {
 
         shouldAutoPlay = true;
         bandwidthMeter = new DefaultBandwidthMeter();
-        mediaDataSourceFactory = new DefaultDataSourceFactory(this,
-                Util.getUserAgent(this, "mediaPlayerSample"), (TransferListener<? super DataSource>) bandwidthMeter);
+        mediaDataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"), (TransferListener<? super DataSource>) bandwidthMeter);
         window = new Timeline.Window();
         ivHideControllerButton = findViewById(R.id.exo_controller);
-
+        progressBar = findViewById(R.id.progress_bar);
     }
 
     private void initializePlayer() {
 
-        mPlayerView = findViewById(R.id.player_view);
-        mPlayerView.requestFocus();
+        playerView = findViewById(R.id.player_view);
+        playerView.requestFocus();
 
         TrackSelection.Factory videoTrackSelectionFactory =
                 new AdaptiveTrackSelection.Factory(bandwidthMeter);
@@ -81,8 +82,9 @@ public class VideoPlayerActivity extends Activity {
 
         player = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
 
-        mPlayerView.setPlayer(player);
+        playerView.setPlayer(player);
 
+        player.addListener(new PlayerEventListener());
         player.setPlayWhenReady(shouldAutoPlay);
 /*        MediaSource mediaSource = new HlsMediaSource(Uri.parse("https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"),
                 mediaDataSourceFactory, mainHandler, null);*/
@@ -101,7 +103,7 @@ public class VideoPlayerActivity extends Activity {
         ivHideControllerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPlayerView.hideController();
+                playerView.hideController();
             }
         });
     }
@@ -162,5 +164,26 @@ public class VideoPlayerActivity extends Activity {
         playbackPosition = player.getCurrentPosition();
         currentWindow = player.getCurrentWindowIndex();
         playWhenReady = player.getPlayWhenReady();
+    }
+
+    private class PlayerEventListener extends Player.DefaultEventListener{
+
+        @Override
+        public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+            switch (playbackState) {
+                case Player.STATE_IDLE:       // The player does not have any media to play yet.
+                    progressBar.setVisibility(View.VISIBLE);
+                    break;
+                case Player.STATE_BUFFERING:  // The player is buffering (loading the content)
+                    progressBar.setVisibility(View.VISIBLE);
+                    break;
+                case Player.STATE_READY:      // The player is able to immediately play
+                    progressBar.setVisibility(View.GONE);
+                    break;
+                case Player.STATE_ENDED:      // The player has finished playing the media
+                    progressBar.setVisibility(View.GONE);
+                    break;
+            }
+        }
     }
 }
