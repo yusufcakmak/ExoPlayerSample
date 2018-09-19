@@ -7,4 +7,5 @@
     <string name="exo_controls_stop_description">Stop</string>
     <string name="exo_controls_rewind_description">Rewind</string>
     <string name="exo_controls_fastforward_description">Fast forward</string>
+    <string name="video">Video</string>
 </resources>

@@ -30,6 +30,14 @@
 
 
         <ImageView
+            android:id="@+id/settings"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_settings" />
+
+        <ImageView
             android:layout_width="24dp"
             android:src="@drawable/ic_hide"
             android:id="@+id/exo_controller"
