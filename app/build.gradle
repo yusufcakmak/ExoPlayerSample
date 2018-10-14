@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 27
@@ -36,7 +37,7 @@ dependencies {
 
     // full exoplayer library
     implementation 'com.google.android.exoplayer:exoplayer:2.8.2'
-
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     /*
     library modules
@@ -46,4 +47,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-hls:r2.X.X'
     implementation 'com.google.android.exoplayer-smoothstreaming:r2.X.X'
     */
+}
+repositories {
+    mavenCentral()
 }
