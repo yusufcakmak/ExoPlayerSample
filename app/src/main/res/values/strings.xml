@@ -8,4 +8,6 @@
     <string name="exo_controls_rewind_description">Rewind</string>
     <string name="exo_controls_fastforward_description">Fast forward</string>
     <string name="video">Video</string>
+    <string name="radio_player">Radio Player</string>
+    <string name="video_player">Video Player</string>
 </resources>
