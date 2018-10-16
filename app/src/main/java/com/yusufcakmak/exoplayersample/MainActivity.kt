@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
             val intent = Intent(this@MainActivity, RadioPlayerActivity::class.java)
             startActivity(intent)
+
         }
 
         videoPlayerButton.setOnClickListener {
@@ -28,5 +29,4 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
 }
