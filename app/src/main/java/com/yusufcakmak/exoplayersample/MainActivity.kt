@@ -25,8 +25,10 @@ class MainActivity : AppCompatActivity() {
 
             val intent = Intent(this@MainActivity, VideoPlayerActivity::class.java)
             startActivity(intent)
-
         }
 
+
     }
+
 }
+
