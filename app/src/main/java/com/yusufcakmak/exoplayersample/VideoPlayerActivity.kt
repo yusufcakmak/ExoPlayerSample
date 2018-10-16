@@ -7,7 +7,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.C
+import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
@@ -31,10 +34,10 @@ class VideoPlayerActivity : Activity(), View.OnClickListener {
     private val playerView: PlayerView by lazy { findViewById<PlayerView>(R.id.player_view) }
 
 
-    private var mediaDataSourceFactory: DataSource.Factory? = null
+    private var shouldAutoPlay: Boolean = true
     private var trackSelector: DefaultTrackSelector? = null
     private var lastSeenTrackGroupArray: TrackGroupArray? = null
-    private var shouldAutoPlay: Boolean = false
+    private lateinit var mediaDataSourceFactory: DataSource.Factory
     private val bandwidthMeter: BandwidthMeter = DefaultBandwidthMeter()
 
     private var playWhenReady: Boolean = false
@@ -49,11 +52,8 @@ class VideoPlayerActivity : Activity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_player)
 
-        if (savedInstanceState == null) {
-            playWhenReady = true
-            currentWindow = 0
-            playbackPosition = 0
-        } else {
+        if (savedInstanceState != null) {
+
             with(savedInstanceState) {
                 playWhenReady = getBoolean(KEY_PLAY_WHEN_READY)
                 currentWindow = getInt(KEY_WINDOW)
@@ -62,7 +62,8 @@ class VideoPlayerActivity : Activity(), View.OnClickListener {
         }
 
         shouldAutoPlay = true
-        mediaDataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"), bandwidthMeter as TransferListener<in DataSource>)
+        mediaDataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"),
+                bandwidthMeter as TransferListener<in DataSource>)
     }
 
     public override fun onStart() {
@@ -90,9 +91,13 @@ class VideoPlayerActivity : Activity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
+
         if (v.id == R.id.settings) {
-            val mappedTrackInfo = trackSelector!!.currentMappedTrackInfo
+
+            val mappedTrackInfo = trackSelector?.currentMappedTrackInfo
+
             if (mappedTrackInfo != null) {
+
                 val title = getString(R.string.video)
                 val rendererIndex = ivSettings.tag as Int
                 val dialogPair = TrackSelectionView.getDialog(this, title, trackSelector, rendererIndex)
