@@ -66,7 +66,7 @@ public class PlayListActivity extends Activity {
 
         MediaSource[] mediaSources = new MediaSource[videos.size()];
         for (int i = 0; i < videos.size(); i++) {
-            mediaSources[i] = buildMediaSource(Uri.parse(videos.get(i).videoUrl));
+            mediaSources[i] = buildMediaSource(Uri.parse(videos.get(i).getVideoUrl()));
         }
         MediaSource mediaSource = mediaSources.length == 1 ? mediaSources[0]
                 : new ConcatenatingMediaSource(mediaSources);
@@ -76,7 +76,7 @@ public class PlayListActivity extends Activity {
     public void createDummyList(){
         VideoModel video = new VideoModel();
         for (int i = 0; i < 5; i++) {
-            video.videoUrl = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
+            video.setVideoUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4");
             videos.add(video);
         }
     }
