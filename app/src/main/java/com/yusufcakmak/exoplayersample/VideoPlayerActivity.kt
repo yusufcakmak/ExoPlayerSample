@@ -45,7 +45,7 @@ class VideoPlayerActivity : Activity(), View.OnClickListener {
     private var playbackPosition: Long = 0
     private val progressBar: ProgressBar by lazy { findViewById<ProgressBar>(R.id.progress_bar) }
     private val ivHideControllerButton: ImageView by lazy { findViewById<ImageView>(R.id.exo_controller) }
-    private val ivSettings: ImageView by lazy { findViewById<ImageView>(R.id.exo_controller) }
+    private val ivSettings: ImageView by lazy { findViewById<ImageView>(R.id.settings) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
