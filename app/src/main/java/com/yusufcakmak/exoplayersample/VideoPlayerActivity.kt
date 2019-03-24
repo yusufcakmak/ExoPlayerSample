@@ -62,8 +62,8 @@ class VideoPlayerActivity : Activity(), View.OnClickListener {
         }
 
         shouldAutoPlay = true
-        mediaDataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"),
-                bandwidthMeter as TransferListener<in DataSource>)
+   /*     mediaDataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"),
+                bandwidthMeter as TransferListener<in DataSource>)*/
     }
 
     public override fun onStart() {

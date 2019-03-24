@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.yusufcakmak.exoplayersample"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -25,28 +25,36 @@ android {
             url "https://maven.google.com"
         }
     }
+
+    // For Java compilers:
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+// For Kotlin compilers:
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.android.support:appcompat-v7:27.0.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
     testImplementation 'junit:junit:4.12'
-
     // full exoplayer library
-    implementation 'com.google.android.exoplayer:exoplayer:2.8.2'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
+    implementation 'com.google.android.exoplayer:exoplayer:2.9.6'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     /*
-    library modules
-    implementation 'com.google.android.exoplayer:exoplayer-core:r2.X.X'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:r2.X.X'
-    implementation 'com.google.android.exoplayer:exoplayer-dash:r2.X.X'
-    implementation 'com.google.android.exoplayer:exoplayer-hls:r2.X.X'
-    implementation 'com.google.android.exoplayer-smoothstreaming:r2.X.X'
-    */
+        library modules
+        implementation 'com.google.android.exoplayer:exoplayer-core:r2.X.X'
+        implementation 'com.google.android.exoplayer:exoplayer-ui:r2.X.X'
+        implementation 'com.google.android.exoplayer:exoplayer-dash:r2.X.X'
+        implementation 'com.google.android.exoplayer:exoplayer-hls:r2.X.X'
+        implementation 'com.google.android.exoplayer-smoothstreaming:r2.X.X'
+        */
 }
 repositories {
     mavenCentral()

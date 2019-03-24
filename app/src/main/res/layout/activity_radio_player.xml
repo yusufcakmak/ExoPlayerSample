@@ -14,13 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Start"
-        android:id="@+id/startButton"/>
+        android:id="@+id/btnStart"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/startButton"
-        android:id="@+id/stopButton"
+        android:layout_below="@+id/btnStart"
+        android:id="@+id/btnStop"
         android:text="Stop"/>
 
 

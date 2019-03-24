@@ -9,7 +9,7 @@
     tools:context="com.yusufcakmak.exoplayersample.MainActivity">
 
     <Button
-        android:id="@+id/button_radio_player"
+        android:id="@+id/btnRadioPlayer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/radio_player"
@@ -17,7 +17,7 @@
 
 
     <Button
-        android:id="@+id/button_video_player"
+        android:id="@+id/btnVideoPlayer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/video_player"
