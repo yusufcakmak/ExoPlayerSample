@@ -7,13 +7,13 @@
     android:keepScreenOn="true">
 
     <com.google.android.exoplayer2.ui.PlayerView
-        android:id="@+id/player_view"
+        android:id="@+id/playerView"
         android:focusable="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ProgressBar
-            android:id="@+id/progress_bar"
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
