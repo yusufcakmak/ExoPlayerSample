@@ -1,6 +1,6 @@
 # ExoPlayer2 Sample Project
 
-#### This repo updated for r2.5.1 version.
+#### This repo updated for r2.10.4 version.
 
 You can play videos and musics with ExoPlayer. This demo shows you how to use ExoPlayer. You can play mp3s or radio stream links with RadioActivity.
 
@@ -14,13 +14,16 @@ I changed playback controls for custom ui demo. If you want to use default contr
 ### Playing Audio
 
 ```
-        player = ExoPlayerFactory.newSimpleInstance(getApplicationContext(), trackSelector, loadControl);
+  player = ExoPlayerFactory.newSimpleInstance(this)
 
-        bandwidthMeter = new DefaultBandwidthMeter();
-        dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"), (TransferListener<? super DataSource>) bandwidthMeter);
-        extractorsFactory = new DefaultExtractorsFactory();
-        mediaSource = new ExtractorMediaSource(Uri.parse(radioUrl), dataSourceFactory, extractorsFactory, null, null);
-        player.prepare(mediaSource);
+  dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "exoPlayerSample"))
+
+  mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(RADIO_URL))
+
+  player.prepare(mediaSource)
+        
+  player.playWhenReady = true
+  
 ```
 
 You can play and pause audio with this method setPlayWhenReady(boolean);
@@ -40,28 +43,23 @@ player.setPlayWhenReady(false);
 We need to SimpleExoPlayerView for playing videos.
 
 ```
-        simpleExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.player_view);
-        simpleExoPlayerView.requestFocus();
+        player = ExoPlayerFactory.newSimpleInstance(this)
 
-        TrackSelection.Factory videoTrackSelectionFactory =
-                new AdaptiveTrackSelection.Factory(bandwidthMeter);
+        mediaDataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"))
 
-        trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
+        val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory)
+                .createMediaSource(Uri.parse(STREAM_URL))
 
-        player = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
 
-        simpleExoPlayerView.setPlayer(player);
+        with(player) {
+            prepare(mediaSource, false, false)
+            playWhenReady = true
+        }
 
-        player.setPlayWhenReady(shouldAutoPlay);
-/*        MediaSource mediaSource = new HlsMediaSource(Uri.parse("https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"),
-                mediaDataSourceFactory, mainHandler, null);*/
 
-        DefaultExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
-
-        MediaSource mediaSource = new ExtractorMediaSource(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"),
-                mediaDataSourceFactory, extractorsFactory, null, null);
-
-        player.prepare(mediaSource);
+        playerView.setShutterBackgroundColor(Color.TRANSPARENT)
+        playerView.player = player
+        playerView.requestFocus()
 ```
 
  If you use hls or dash formats, you need to use HlsMediaSource as a MediaSource.
@@ -81,27 +79,6 @@ MediaSource mediaSource = new DashMediaSource(uri, buildDataSourceFactory(false)
             new DefaultDashChunkSource.Factory(mediaDataSourceFactory), mainHandler, null);
 player.prepare(mediaSource);
 ```
-
-If you use mp4, flv, mkv or other formats, you need to use ExtractorMediaSource as a MediaSource. Also we are using the ExtractorMediaSource for playing audio formats.Supported formats; mkv, mp4, mp3, ogg, ac3, flv, wav, flac.
-
-```
-extractorsFactory = new DefaultExtractorsFactory();
-MediaSource mediaSource = new ExtractorMediaSource(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"),
-                mediaDataSourceFactory, extractorsFactory, null, null);
-player.prepare(mediaSource);
-```
-
-
-![player](https://raw.githubusercontent.com/yusufcakmak/ExoPlayerSample/master/screenshot/player.jpg)
-
-### Custom UI
-
-You can build custom players by overriding layout files. You need to create to files in your layout folder. Necessary files are given below. But first we can look how to do it. There it is two layout files enough for the building a custom player. This is an easy and good way for developers. 
-
-[exo_playback_control_view.xml](https://github.com/google/ExoPlayer/blob/release-v2/library/ui/src/main/res/layout/exo_playback_control_view.xml)
-[exo_simple_player_view.xml](https://github.com/google/ExoPlayer/blob/release-v2/library/ui/src/main/res/layout/exo_simple_player_view.xml)
-
-![customui](https://raw.githubusercontent.com/yusufcakmak/ExoPlayerSample/master/screenshot/customplayer.jpg)
 
 
 License
