@@ -2,11 +2,12 @@ package com.yusufcakmak.exoplayersample
 
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelection
@@ -22,21 +23,18 @@ class RadioPlayerActivity : AppCompatActivity() {
     private lateinit var player: SimpleExoPlayer
     private lateinit var mediaSource: MediaSource
     private lateinit var dataSourceFactory: DefaultDataSourceFactory
-    private val BANDWIDTH_METER = DefaultBandwidthMeter()
-
-    private val trackSelectionFactory: TrackSelection.Factory = AdaptiveTrackSelection.Factory()
-    private val trackSelector: TrackSelector = DefaultTrackSelector(trackSelectionFactory)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_radio_player)
 
-        dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "exoPlayerSample"), BANDWIDTH_METER)
+        player = ExoPlayerFactory.newSimpleInstance(this)
 
-        mediaSource = ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(RADIO_URL))
+        dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "exoPlayerSample"))
 
-        player = ExoPlayerFactory.newSimpleInstance(this, trackSelector)
+        mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(RADIO_URL))
+
 
         with(player) {
             prepare(mediaSource)
@@ -57,6 +55,6 @@ class RadioPlayerActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val RADIO_URL = "http://uk7.internet-radio.com:8226"
+        const val RADIO_URL = "http://airspectrum.cdnstream1.com:8114/1648_128"
     }
 }
