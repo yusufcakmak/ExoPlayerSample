@@ -55,6 +55,6 @@ class RadioPlayerActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val RADIO_URL = "http://airspectrum.cdnstream1.com:8114/1648_128"
+        const val RADIO_URL = "http://kastos.cdnstream.com/1345_32"
     }
 }
