@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_video_player.*
 
 class VideoPlayerActivity : Activity() {
 
-    private lateinit var player: SimpleExoPlayer
+    private lateinit var simpleExoPlayer: SimpleExoPlayer
     private lateinit var mediaDataSourceFactory: DataSource.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,28 +24,22 @@ class VideoPlayerActivity : Activity() {
 
     private fun initializePlayer() {
 
-        player = ExoPlayerFactory.newSimpleInstance(this)
+        simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(this)
 
         mediaDataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"))
 
-        val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory)
-                .createMediaSource(Uri.parse(STREAM_URL))
+        val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(Uri.parse(STREAM_URL))
 
-
-        with(player) {
-            prepare(mediaSource, false, false)
-            playWhenReady = true
-        }
-
+        simpleExoPlayer.prepare(mediaSource, false, false)
+        simpleExoPlayer.playWhenReady = true
 
         playerView.setShutterBackgroundColor(Color.TRANSPARENT)
-        playerView.player = player
+        playerView.player = simpleExoPlayer
         playerView.requestFocus()
-
     }
 
     private fun releasePlayer() {
-        player.release()
+        simpleExoPlayer.release()
     }
 
     public override fun onStart() {
