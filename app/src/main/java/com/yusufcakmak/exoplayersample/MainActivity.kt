@@ -21,6 +21,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, VideoPlayerActivity::class.java)
             startActivity(intent)
         }
+
+        btnVideoPlayer2.setOnClickListener {
+            val intent = Intent(this@MainActivity, VideoPlayerActivity2::class.java)
+            startActivity(intent)
+        }
     }
 
 }
