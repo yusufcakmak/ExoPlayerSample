@@ -6,6 +6,14 @@
 
 #### IN-PROGRESS
 
+#### TODOs
+
+- Example for playing local audio files.
+- Example for playing local video files.
+- Example for playing remote video files.
+- Example for playing local video files.
+- Example for different media sources.
+
 License
 --------
 
