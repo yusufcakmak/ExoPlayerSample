@@ -22,11 +22,5 @@
         android:text="@string/video_player"
         android:textAllCaps="false" />
 
-    <Button
-        android:id="@+id/btnVideoPlayer2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/video_player2"
-        android:textAllCaps="false" />
 
 </LinearLayout>

@@ -1,85 +1,10 @@
 # ExoPlayer2 Sample Project
 
-#### This repo updated for r2.10.4 version.
+#### This repo updated for 2.13.2 version.
 
-You can play videos and musics with ExoPlayer. This demo shows you how to use ExoPlayer. You can play mp3s or radio stream links with RadioActivity.
+#### I'll provide more examples for different scenarios. If you have a special request please open a pull request.
 
-I wrote a article about ExoPlayer. 
-
-[https://medium.com/@yusufcakmak/android-exoplayer-starters-guide-6350433f256c](https://medium.com/@yusufcakmak/android-exoplayer-starters-guide-6350433f256c)
-
-I changed playback controls for custom ui demo. If you want to use default controls, you can delete exoplayer layout files. You can find more details under Custom UI heading.
-
-
-### Playing Audio
-
-```
-  player = ExoPlayerFactory.newSimpleInstance(this)
-
-  dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "exoPlayerSample"))
-
-  mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(RADIO_URL))
-
-  player.prepare(mediaSource)
-        
-  player.playWhenReady = true
-  
-```
-
-You can play and pause audio with this method setPlayWhenReady(boolean);
-
-play audio 
-```
-player.setPlayWhenReady(true);
-```
-
-pause audio
-```
-player.setPlayWhenReady(false);
-```
-
-### Playing Video
-
-We need to SimpleExoPlayerView for playing videos.
-
-```
-        player = ExoPlayerFactory.newSimpleInstance(this)
-
-        mediaDataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"))
-
-        val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory)
-                .createMediaSource(Uri.parse(STREAM_URL))
-
-
-        with(player) {
-            prepare(mediaSource, false, false)
-            playWhenReady = true
-        }
-
-
-        playerView.setShutterBackgroundColor(Color.TRANSPARENT)
-        playerView.player = player
-        playerView.requestFocus()
-```
-
- If you use hls or dash formats, you need to use HlsMediaSource as a MediaSource.
- 
- For hls
-
-```
-MediaSource mediaSource = new HlsMediaSource(Uri.parse("https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"),
-                mediaDataSourceFactory, mainHandler, null);
-player.prepare(mediaSource);
-```
-
-For dash
-
-```
-MediaSource mediaSource = new DashMediaSource(uri, buildDataSourceFactory(false),
-            new DefaultDashChunkSource.Factory(mediaDataSourceFactory), mainHandler, null);
-player.prepare(mediaSource);
-```
-
+#### IN-PROGRESS
 
 License
 --------

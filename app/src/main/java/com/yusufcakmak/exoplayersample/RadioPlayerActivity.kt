@@ -3,42 +3,47 @@ package com.yusufcakmak.exoplayersample
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.MediaSourceFactory
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import kotlinx.android.synthetic.main.activity_radio_player.*
-
+import com.yusufcakmak.exoplayersample.databinding.ActivityRadioPlayerBinding
 
 class RadioPlayerActivity : AppCompatActivity() {
 
     private lateinit var simpleExoPlayer: SimpleExoPlayer
-    private lateinit var mediaSource: MediaSource
-    private lateinit var dataSourceFactory: DefaultDataSourceFactory
+    private lateinit var mediaDataSourceFactory: DataSource.Factory
+    private lateinit var binding: ActivityRadioPlayerBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_radio_player)
+        binding = ActivityRadioPlayerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(this)
+        mediaDataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"))
 
-        dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "exoPlayerSample"))
+        val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(MediaItem.fromUri(RADIO_URL))
 
-        mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(RADIO_URL))
+        val mediaSourceFactory: MediaSourceFactory = DefaultMediaSourceFactory(mediaDataSourceFactory)
 
+        simpleExoPlayer = SimpleExoPlayer.Builder(this)
+                .setMediaSourceFactory(mediaSourceFactory)
+                .build()
 
-        with(simpleExoPlayer) {
-            prepare(mediaSource)
-            btnStart.setOnClickListener {
-                playWhenReady = true
-            }
+        simpleExoPlayer.addMediaSource(mediaSource)
+        simpleExoPlayer.prepare()
+        binding.btnStart.setOnClickListener {
+            simpleExoPlayer.playWhenReady = true
+        }
 
-            btnStop.setOnClickListener {
-                playWhenReady = false
-            }
+        binding.btnStop.setOnClickListener {
+            simpleExoPlayer.playWhenReady = false
         }
     }
 
