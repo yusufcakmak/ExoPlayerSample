@@ -17,7 +17,7 @@ import com.yusufcakmak.exoplayersample.databinding.ActivityRadioPlayerBinding
 class RadioPlayerActivity : AppCompatActivity() {
 
     private lateinit var simpleExoPlayer: SimpleExoPlayer
-    private lateinit var mediaDataSourceFactory: DataSource.Factory
+
     private lateinit var binding: ActivityRadioPlayerBinding
 
 
@@ -26,7 +26,13 @@ class RadioPlayerActivity : AppCompatActivity() {
         binding = ActivityRadioPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mediaDataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"))
+        prepareMediaPlayer()
+        initListeners()
+    }
+
+    private fun prepareMediaPlayer() {
+
+        val mediaDataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "mediaPlayerSample"))
 
         val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(MediaItem.fromUri(RADIO_URL))
 
@@ -38,6 +44,9 @@ class RadioPlayerActivity : AppCompatActivity() {
 
         simpleExoPlayer.addMediaSource(mediaSource)
         simpleExoPlayer.prepare()
+    }
+
+    private fun initListeners() {
         binding.btnStart.setOnClickListener {
             simpleExoPlayer.playWhenReady = true
         }
