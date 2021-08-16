@@ -1,6 +1,6 @@
 # ExoPlayer2 Sample Project
 
-#### This repo updated for 2.13.2 version.
+#### This repo updated for 2.15.0 version.
 
 #### I'll provide more examples for different scenarios. If you have a special request please open a pull request.
 
