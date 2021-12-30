@@ -3,11 +3,11 @@ apply plugin: 'kotlin-android'
 
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         applicationId "com.yusufcakmak.exoplayersample"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -20,7 +20,6 @@ android {
     }
 
     repositories {
-        jcenter()
         maven {
             url "https://maven.google.com"
         }
@@ -44,12 +43,12 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'androidx.core:core-ktx:1.7.0'
 
     // full exoplayer library
-    implementation 'com.google.android.exoplayer:exoplayer:2.15.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.20"
+    implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.31"
 
 }
 repositories {
