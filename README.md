@@ -15,8 +15,16 @@ This activity contains an example of how we can create basically player object a
 
 Please follow the Google official guide and medium publications for more advanced topics.
 
-[Medium Publication](https://medium.com/google-exoplayer)
-[Official Guide](https://exoplayer.dev/)
+-[Medium Publication](https://medium.com/google-exoplayer)
+-[Official Guide](https://exoplayer.dev/)
+
+
+### ExoPlayer with Jetpack Compose
+
+If you wonder about how we can use ExoPlayer with Jetpack Compose, you can look for my other example repository.
+
+[Github Repository](https://github.com/yusufcakmak/ExoPlayerComposeSample)
+
 
 
 --------
