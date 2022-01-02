@@ -11,4 +11,8 @@
     <string name="radio_player">Radio Player</string>
     <string name="video_player">Video Player</string>
     <string name="video_player2">Video Player with callback methods</string>
+    <string name="buttons_play_content_description">play</string>
+    <string name="buttons_pause_content_description">pause</string>
+    <string name="buttons_settings_content_description">settings</string>
+    <string name="buttons_hide_content_description">hide</string>
 </resources>

@@ -1,7 +1,6 @@
 package com.yusufcakmak.exoplayersample
 
 import android.app.Activity
-import android.graphics.Color
 import android.os.Bundle
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -40,8 +39,6 @@ class VideoPlayerActivity : Activity() {
         simpleExoPlayer.addMediaSource(mediaSource)
 
         simpleExoPlayer.playWhenReady = true
-
-        binding.playerView.setShutterBackgroundColor(Color.TRANSPARENT)
         binding.playerView.player = simpleExoPlayer
         binding.playerView.requestFocus()
     }
