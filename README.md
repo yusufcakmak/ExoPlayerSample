@@ -1,20 +1,11 @@
 # ExoPlayer2 Sample Project
 
-#### This repo updated for 2.15.0 version.
+This repo provides examples for playing video and streaming audio
 
-#### I'll provide more examples for different scenarios. If you have a special request please open a pull request.
+Exoplayer version : 2.16.1
 
-#### IN-PROGRESS
 
-#### TODOs
 
-- Example for playing local audio files.
-- Example for playing local video files.
-- Example for playing remote video files.
-- Example for playing local video files.
-- Example for different media sources.
-
-License
 --------
 
 
