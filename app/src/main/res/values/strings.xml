@@ -15,4 +15,6 @@
     <string name="buttons_pause_content_description">pause</string>
     <string name="buttons_settings_content_description">settings</string>
     <string name="buttons_hide_content_description">hide</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
 </resources>

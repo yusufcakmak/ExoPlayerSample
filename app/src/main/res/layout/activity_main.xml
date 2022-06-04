@@ -21,6 +21,4 @@
         android:layout_height="wrap_content"
         android:text="@string/video_player"
         android:textAllCaps="false" />
-
-
 </LinearLayout>
