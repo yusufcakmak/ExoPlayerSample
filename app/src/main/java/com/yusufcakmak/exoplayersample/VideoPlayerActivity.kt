@@ -5,7 +5,6 @@ import android.os.Bundle
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
-import com.google.android.exoplayer2.source.MediaSourceFactory
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSource
@@ -16,7 +15,7 @@ import com.yusufcakmak.exoplayersample.databinding.ActivityVideoPlayerBinding
 class VideoPlayerActivity : Activity() {
 
     private lateinit var simpleExoPlayer: ExoPlayer
-    private lateinit var binding : ActivityVideoPlayerBinding
+    private lateinit var binding: ActivityVideoPlayerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,13 +27,14 @@ class VideoPlayerActivity : Activity() {
 
         val mediaDataSourceFactory: DataSource.Factory = DefaultDataSource.Factory(this)
 
-        val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(MediaItem.fromUri(STREAM_URL))
+        val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory)
+            .createMediaSource(MediaItem.fromUri(STREAM_URL))
 
-        val mediaSourceFactory: MediaSourceFactory = DefaultMediaSourceFactory(mediaDataSourceFactory)
+        val mediaSourceFactory = DefaultMediaSourceFactory(mediaDataSourceFactory)
 
         simpleExoPlayer = ExoPlayer.Builder(this)
-                .setMediaSourceFactory(mediaSourceFactory)
-                .build()
+            .setMediaSourceFactory(mediaSourceFactory)
+            .build()
 
         simpleExoPlayer.addMediaSource(mediaSource)
 

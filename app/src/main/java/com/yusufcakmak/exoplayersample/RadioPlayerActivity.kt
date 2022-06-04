@@ -30,13 +30,14 @@ class RadioPlayerActivity : AppCompatActivity() {
 
         val mediaDataSourceFactory: DataSource.Factory = DefaultDataSource.Factory(this)
 
-        val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(MediaItem.fromUri(RADIO_URL))
+        val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory)
+            .createMediaSource(MediaItem.fromUri(RADIO_URL))
 
-        val mediaSourceFactory: MediaSourceFactory = DefaultMediaSourceFactory(mediaDataSourceFactory)
+        val mediaSourceFactory = DefaultMediaSourceFactory(mediaDataSourceFactory)
 
         simpleExoPlayer = ExoPlayer.Builder(this)
-                .setMediaSourceFactory(mediaSourceFactory)
-                .build()
+            .setMediaSourceFactory(mediaSourceFactory)
+            .build()
 
         simpleExoPlayer.addMediaSource(mediaSource)
         simpleExoPlayer.prepare()
