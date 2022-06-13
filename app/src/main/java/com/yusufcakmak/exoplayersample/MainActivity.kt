@@ -14,7 +14,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         binding.btnRadioPlayer.setOnClickListener {
             val intent = Intent(this@MainActivity, RadioPlayerActivity::class.java)
             startActivity(intent)

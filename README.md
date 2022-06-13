@@ -2,7 +2,7 @@
 
 I created this repository for developers who recently start learning ExoPlayer. This repository demonstrates the basic way how we can play audio/video files/URLs.
 
-Exoplayer version : 2.16.1
+`ExoPlayer` version : 2.17.1
 
 ### RadioPlayerActivity
 This activity contains an example of how we can create basically player object and stream audio from URL.

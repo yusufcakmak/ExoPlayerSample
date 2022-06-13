@@ -2,18 +2,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageButton android:id="@id/exo_play"
+    <ImageButton
+        android:id="@id/exo_play"
+        style="@style/ExoMediaButton.Play"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:background="#CC000000"
-        style="@style/ExoMediaButton.Play"/>
+        android:background="#CC000000" />
 
-    <ImageButton android:id="@id/exo_pause"
+    <ImageButton
+        android:id="@id/exo_pause"
+        style="@style/ExoMediaButton.Pause"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:background="#CC000000"
-        style="@style/ExoMediaButton.Pause"/>
+        android:background="#CC000000" />
 
 </FrameLayout>
